@@ -63,7 +63,7 @@ displayCards();
 
 deck.addEventListener("click", function handleCardClick(evt){
     displaySymbol(evt);
-
+    addOpenCards(evt);
 });
 
 //fumction to display symbol
@@ -73,10 +73,16 @@ function displaySymbol(evt) {
     //console.log(clickedCard)
 }
 
-openCards = [];
+const openCards = [];
 
-
-
+function addOpenCards(evt) {
+    const clickedCard= evt.target       
+    const allCardArray = clickedCard.firstElementChild.className.split(" ");
+    const cardArray = allCardArray[1].split("-");
+    const specificCard = cardArray[1];
+    openCards.push(specificCard);
+    console.log(openCards)
+}
 
 
 
