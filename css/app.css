@@ -81,6 +81,9 @@ h1 {
     font-size: 33px;
 }
 
+.non-match {
+    background-color: red !important;
+}
 /*
  * Styles for the Score Panel
  */
