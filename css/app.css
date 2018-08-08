@@ -49,24 +49,23 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin: 0 0 3em;
+    perspective: 1000px;
 }
 
 #deck .card {
     height: 125px;
     width: 125px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
     border-radius: 8px;
-    cursor: pointer;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
 #deck .card.open {
-    transform: rotateY(0);
+    transform: rotateY(180);
     background: #02b3e4;
     cursor: default;
 }
@@ -79,6 +78,37 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+}
+
+#deck .card .front i {
+    margin: 45px;
+}
+
+#deck .card .front, #deck .card .back {
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    backface-visibility: hidden;
+    position: absolute;
+}
+
+#deck .card .front {
+    /* background: #02b3e4; */
+    color: #ffffff;
+    cursor: default;
+    font-size: 33px;
+    
+}
+
+#deck .card .back{
+    background: #2e3d49;
+    font-size: 0;
+    transform: rotateY(180deg)
+}
+
+#deck .card.flip {
+    transform: rotateY(180deg)
 }
 
 .non-match {
@@ -106,7 +136,36 @@ h1 {
     display: inline-block;
 }
 
+.score-panel #timer {
+    float: right;
+    margin-right: 10px;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
 }
+
+
+/*
+ * Styles for the end display message
+ */
+
+ .end-msg {
+     border: 1px solid black;
+     border-radius: 15px;
+     margin: auto;
+     padding: auto;
+     font-size: 20px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ .end-btn {
+     padding: 20px 15px;
+     margin: 10px auto;
+     background-color: green;
+     color: white;
+     border-radius: 8px;
+ }

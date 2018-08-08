@@ -22,22 +22,25 @@
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">3</span> Moves
-
+        	<span class="moves">0</span> Moves
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
+                <i class="fa fa-repeat"></i>
         	</div>
+            <span id="timer">Time: 00:00:00</span>
         </section>
 
         <ul id="deck">
-            <li class="card">
-                <i class="fa fa-diamond"></i>
+            <li class="card" >
+                <div class="front"><i class="fa fa-diamond"></i></div>
+                <div class="back"></div>
             </li>
             <li class="card">
-                <i class="fa fa-paper-plane-o"></i>
+                <div class="front"><i class="fa fa-paper-plane-o"></i></div>
+                <div class="back"></div>
             </li>
             <li class="card match">
-                <i class="fa fa-anchor"></i>
+                <div class="front"><i class="fa fa-anchor"></i></div>
+                <div class="back"></div>
             </li>
             <li class="card">
                 <i class="fa fa-bolt"></i>
@@ -81,6 +84,12 @@
         </ul>
     </div>
 
+    <!-- <script>
+        function flip() {
+            console.log("Flipped");
+            document.querySelector("#myCard").classList.toggle("flip");
+        }
+    </script-->
     <script src="js/app.js"></script>
 </body>
 </html>
