@@ -136,7 +136,7 @@ h1 {
     display: inline-block;
 }
 
-.score-panel #timer {
+.score-panel #timing {
     float: right;
     margin-right: 10px;
 }
@@ -152,14 +152,16 @@ h1 {
  */
 
  .end-msg {
-     border: 1px solid black;
-     border-radius: 15px;
-     margin: auto;
-     padding: auto;
+     margin-top: 30%;
      font-size: 20px;
      display: flex;
      flex-direction: column;
      align-items: center;
+ }
+
+ .end-msg i {
+    font-size: 50px;
+    color: green;
  }
 
  .end-btn {

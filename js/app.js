@@ -75,7 +75,7 @@ setTimeout(() => {
 
 deck.addEventListener("click", function handleCardClick(evt){
     if(evt.target.nodeName === 'DIV') {
-        console.log("clicked");
+        //console.log("clicked");
         displaySymbol(evt);
         //addOpenCards(evt);
         matchOpenCards();
@@ -83,6 +83,15 @@ deck.addEventListener("click", function handleCardClick(evt){
         checkAllMatch();
     }
 });
+
+deck.addEventListener('click', handler);
+deck.removeEventListener('click', handler);
+
+function handler(evt) {
+    console.log('first');
+    evt.target.classList.add("first");
+}
+
 
 //function to display symbol
 function displaySymbol(evt) {
@@ -162,18 +171,20 @@ function incrementCounter(openCards) {
     }
 }
 
+
 function checkAllMatch() {
     const matchedCard = document.querySelectorAll(".match");
+    const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
     if (matchedCard.length === 16) {
-        console.log("All Matched!")
         deck.remove();
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
         newDiv.classList.add("end-msg");
-        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>COngratulations! You won!</h><p>You won with ${counter} moves and 1 star</p><button class="end-btn">Play Again</button>';
+        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and 1 star</p><button class="end-btn">Play Again</button>';
         docFrag.appendChild(newDiv);
         document.body.appendChild(docFrag);
+        clearTimeout(t)
     }
 }
 
@@ -181,7 +192,6 @@ function checkAllMatch() {
 const restart = document.querySelector(".restart");
 
 restart.addEventListener("click", function resetGame() {
-    console.log("reset");
     displayCards();
     setTimeout(() => {
         removeCards(cardsOpen)
@@ -193,9 +203,8 @@ restart.addEventListener("click", function resetGame() {
 
 function starRating() {
     let counter = document.querySelector(".moves").textContent;
-    const stars = document.querySelectorAll(".fa-star");
+    const stars = document.querySelectorAll(".star");
     counter = parseInt(counter);
-    console.log(counter);
     if(counter === 2) {
         stars[2].classList.remove("fa-star");
         stars[2].classList.add("fa-star-o");
