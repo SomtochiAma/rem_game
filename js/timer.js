@@ -46,3 +46,10 @@ deck.addEventListener("click", timerControl);
 
 // stopTimer()
 
+function resetTime() {
+    const timing = document.querySelector("#timing");
+    clearTimeout(t);
+    timing.textContent = "00:00:00";
+    seconds = 0; minutes = 0; hours = 0;
+    deck.addEventListener("click", timerControl);
+}

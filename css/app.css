@@ -152,7 +152,7 @@ h1 {
  */
 
  .end-msg {
-     margin-top: 30%;
+     margin-top: 20%;
      font-size: 20px;
      display: flex;
      flex-direction: column;
@@ -164,7 +164,7 @@ h1 {
     color: green;
  }
 
- .end-btn {
+ #end-btn {
      padding: 20px 15px;
      margin: 10px auto;
      background-color: green;

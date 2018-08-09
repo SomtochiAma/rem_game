@@ -174,32 +174,54 @@ function incrementCounter(openCards) {
 
 function checkAllMatch() {
     const matchedCard = document.querySelectorAll(".match");
-    const container = document.querySelector(".container")
+    const numStars = document.querySelector(".fa-star").length;
+    //const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
     if (matchedCard.length === 16) {
         deck.remove();
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
         newDiv.classList.add("end-msg");
-        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and 1 star</p><button class="end-btn">Play Again</button>';
+        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' star</p><button id="end-btn">Play Again</button>';
         docFrag.appendChild(newDiv);
-        document.body.appendChild(docFrag);
+        const firstElement = document.body.childNodes[2];
+        document.body.insertBefore(docFrag, firstElement);
         clearTimeout(t)
     }
 }
 
+playAgain = document.getElementById("end-btn");
+
+document.addEventListener("click", function(evt) {
+    if(evt.target.nodeName === "BUTTON") {
+        const endMessage = document.querySelector(".end-msg");
+        if(endMessage) {
+            endMessage.remove();
+        }
+        const createDesk = document.createElement("ul");
+        createDesk.setAttribute("id", "deck");
+        document.body.appendChild(createDesk);
+        const deck = document.getElementById("deck");
+        reloadGame();
+    }
+});
 
 const restart = document.querySelector(".restart");
 
 restart.addEventListener("click", function resetGame() {
+    reloadGame();
+});
+
+function reloadGame() {
     displayCards();
     setTimeout(() => {
         removeCards(cardsOpen)
     }, 5000); 
     let counter = document.querySelector(".moves");
     counter.textContent = 0;
-});
-
+    resetTime();
+    refreshStars();
+}
 
 function starRating() {
     let counter = document.querySelector(".moves").textContent;
@@ -213,6 +235,16 @@ function starRating() {
         stars[1].classList.add("fa-star-o");
     }
 }
+
+
+function  refreshStars() {
+    const numStars = document.querySelectorAll(".star");
+	for(let star of numStars) {
+		star.classList.remove("fa-star-o");
+		star.classList.add("fa-star");
+    }
+}
+
 
 
 
