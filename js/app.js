@@ -174,7 +174,7 @@ function incrementCounter(openCards) {
 
 function checkAllMatch() {
     const matchedCard = document.querySelectorAll(".match");
-    const numStars = document.querySelector(".fa-star").length;
+    const numStars = document.querySelectorAll(".fa-star").length;
     //const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
     if (matchedCard.length === 16) {
@@ -182,7 +182,7 @@ function checkAllMatch() {
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
         newDiv.classList.add("end-msg");
-        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' star</p><button id="end-btn">Play Again</button>';
+        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' stars</p><button id="end-btn">Play Again</button>';
         docFrag.appendChild(newDiv);
         const firstElement = document.body.childNodes[2];
         document.body.insertBefore(docFrag, firstElement);
