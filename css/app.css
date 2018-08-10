@@ -19,6 +19,7 @@ body {
 body {
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
+
 }
 
 .container {
@@ -38,8 +39,8 @@ h1 {
  */
 
 #deck {
-    width: 660px;
-    min-height: 680px;
+    width: 400px; /*800px;*/
+    min-height: 600px; /*860px;*/
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding: 32px;
     border-radius: 10px;
@@ -53,8 +54,8 @@ h1 {
 }
 
 #deck .card {
-    height: 125px;
-    width: 125px;
+    height: 100px /*125px*/;
+    width: 70px;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
     border-radius: 8px;
     transition: transform 0.6s;
@@ -70,9 +71,9 @@ h1 {
     cursor: default;
 }
 
-#deck .card.show {
-    font-size: 33px;
-}
+/* #deck .card.show {
+    font-size: 60px;
+} */
 
 #deck .card.match {
     cursor: default;
@@ -80,9 +81,7 @@ h1 {
     font-size: 33px;
 }
 
-#deck .card .front i {
-    margin: 45px;
-}
+
 
 #deck .card .front, #deck .card .back {
     height: 100%;
@@ -91,13 +90,16 @@ h1 {
     cursor: pointer;
     backface-visibility: hidden;
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #deck .card .front {
     /* background: #02b3e4; */
     color: #ffffff;
     cursor: default;
-    font-size: 33px;
+    font-size: 20px;
     
 }
 
@@ -171,3 +173,23 @@ h1 {
      color: white;
      border-radius: 8px;
  }
+
+ /*
+  *Media Queries
+  */
+
+@media screen and (min-width: 700px) { 
+    #deck {
+        width: 600px;
+        min-height: 680px;
+    }
+
+    #deck .card {
+        height: 125px;
+        width: 125px;
+    }
+
+    #deck .card .front {
+        font-size: 33px;
+    }
+}
