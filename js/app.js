@@ -2,7 +2,7 @@
  * Create a list that holds all of your cards
  */
 
- const allCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", ];
+const allCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", ];
 
 /*
  * Display the cards on the page
@@ -10,6 +10,8 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+ 
 const deck = document.getElementById("deck");
 const card = document.querySelectorAll(".card");
 let cardsOpen;
@@ -19,6 +21,7 @@ function displayCards() {
         deck.removeChild(deck.childNodes[0]);
     }
     //console.log(deck.innerHTML)
+    
     shuffle(allCards);
     const docFrag = document.createDocumentFragment();
     // newList.classList.add("card");
@@ -32,7 +35,6 @@ function displayCards() {
     deck.appendChild(docFrag);
     console.log(deck.innerHTML);
 }
-
 displayCards();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -178,6 +180,7 @@ function checkAllMatch() {
     //const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
     if (matchedCard.length === 16) {
+        const deck = document.querySelector("#deck");
         deck.remove();
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
@@ -198,22 +201,47 @@ document.addEventListener("click", function(evt) {
         if(endMessage) {
             endMessage.remove();
         }
+        const deck = document.querySelector("#deck");
+        if(deck) {
+            deck.remove();
+        }
         const createDesk = document.createElement("ul");
+        const container = document.querySelector(".container");
         createDesk.setAttribute("id", "deck");
-        document.body.appendChild(createDesk);
-        const deck = document.getElementById("deck");
+        shuffle(allCards); 
+        for(let card of allCards) {
+            const newList = document.createElement("li");
+            newList.classList.add("card", "open")
+            newList.innerHTML = '<div class="front"><i class="fa fa-' + card + '"></i></div><div class="back"></div>'
+            createDesk.appendChild(newList);
+        }
+        //deck = document.querySelector("#desk");
+        container.appendChild(createDesk);
+        //console.log(deck.innerHTML);
         reloadGame();
+        createDesk.addEventListener("click", function handleCardClick(evt){
+            if(evt.target.nodeName === 'DIV') {
+                const deck = document.querySelector("#deck");
+                console.log("clicked");
+                displaySymbol(evt);
+                //addOpenCards(evt);
+                matchOpenCards();
+                starRating();
+                checkAllMatch();
+            }
+        });
+        //createDesk.addEventListener("click", timerControl);
     }
 });
 
 const restart = document.querySelector(".restart");
 
 restart.addEventListener("click", function resetGame() {
+    displayCards();
     reloadGame();
 });
 
 function reloadGame() {
-    displayCards();
     setTimeout(() => {
         removeCards(cardsOpen)
     }, 5000); 
