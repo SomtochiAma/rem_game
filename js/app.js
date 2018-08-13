@@ -16,11 +16,11 @@ const deck = document.getElementById("deck");
 const card = document.querySelectorAll(".card");
 let cardsOpen;
 
+/* Function to display the cards when the page loads */
 function displayCards() {
     while(deck.hasChildNodes()) {
         deck.removeChild(deck.childNodes[0]);
     }
-    //console.log(deck.innerHTML)
     
     shuffle(allCards);
     const docFrag = document.createDocumentFragment();
@@ -33,14 +33,12 @@ function displayCards() {
         docFrag.appendChild(newList);
     }
     deck.appendChild(docFrag);
-    console.log(deck.innerHTML);
 }
-displayCards();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
+    
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
@@ -48,32 +46,36 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
+    
     return array;
 }
 
+/* Function to flip the card over */
 function removeCards(open) {
     open = document.querySelectorAll(".card");
-     open.forEach(card => {
+    open.forEach(card => {
         card.classList.remove("open")
         card.classList.add('flip');
-     })
- }
+    })
+}
 
+displayCards();
+
+/*Flips the card over after a certain amount of time */
 setTimeout(() => {
     removeCards(cardsOpen)
 }, 5000);
 
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+* set up the event listener for a card. If a card is clicked:
+*  - display the card's symbol (put this functionality in another function that you call from this one)
+*  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+*  - if the list already has another card, check to see if the two cards match
+*    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+*    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+*    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+*    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+*/
 
 deck.addEventListener("click", function handleCardClick(evt){
     if(evt.target.nodeName === 'DIV') {
@@ -86,14 +88,14 @@ deck.addEventListener("click", function handleCardClick(evt){
     }
 });
 
-deck.addEventListener('click', handler);
+/* deck.addEventListener('click', handler);
 deck.removeEventListener('click', handler);
 
 function handler(evt) {
     console.log('first');
     evt.target.classList.add("first");
 }
-
+ */
 
 //function to display symbol
 function displaySymbol(evt) {
@@ -105,7 +107,7 @@ function displaySymbol(evt) {
 }
 
 
-function addOpenCards(evt) {
+/* function addOpenCards(evt) {
     const openCards = [];
     const clickedCard= evt.target       
     const allCardArray = clickedCard.firstElementChild.className.split(" ");
@@ -114,25 +116,21 @@ function addOpenCards(evt) {
     openCards.push(specificCard);
     // console.log(openCards);
 }
+ */
+
 
 function matchOpenCards(){
     let openCards = document.querySelectorAll(".open")
     if(openCards.length > 1){
         if(openCards[0].innerHTML !== openCards[1].innerHTML){
-            nonMatchingCards(openCards)
-            incrementCounter(openCards)
-            openCards = [];
-            // console.log(openCards)
-            
-            
+            nonMatchingCards(openCards);
         } else {
-            matchingCards(openCards)
-            incrementCounter(openCards)
-            openCards = []
+            matchingCards(openCards);
         }
-    }
-    
-    
+        incrementCounter(openCards)
+        openCards = [];
+        // console.log(openCards)
+    }   
 }
 
 
@@ -140,9 +138,7 @@ function matchingCards(open) {
     open.forEach( card => {
         card.classList.add('match');
         card.classList.remove("open");
-    })
-    
-    
+    });
 }
 
 function nonMatchingCards( open ){
@@ -175,17 +171,17 @@ function incrementCounter(openCards) {
 
 
 function checkAllMatch() {
-    const matchedCard = document.querySelectorAll(".match");
+    const matchedCard = document.querySelectorAll(".open");
     const numStars = document.querySelectorAll(".fa-star").length;
     //const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
-    if (matchedCard.length === 16) {
+    if (matchedCard.length === 1) {
         const deck = document.querySelector("#deck");
         deck.remove();
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
         newDiv.classList.add("end-msg");
-        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' stars</p><button id="end-btn">Play Again</button>';
+        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' stars</p><div>Name: <input type="text" id="name"><input type="button" value="Save" onclick="save()"></div><button id="end-btn">Play Again</button>';
         docFrag.appendChild(newDiv);
         const firstElement = document.body.childNodes[2];
         document.body.insertBefore(docFrag, firstElement);
@@ -196,7 +192,7 @@ function checkAllMatch() {
 playAgain = document.getElementById("end-btn");
 
 document.addEventListener("click", function(evt) {
-    if(evt.target.nodeName === "BUTTON") {
+    if(evt.target && evt.target.id== 'end-btn') {
         const endMessage = document.querySelector(".end-msg");
         if(endMessage) {
             endMessage.remove();
@@ -241,6 +237,8 @@ restart.addEventListener("click", function resetGame() {
     reloadGame();
 });
 
+
+//Function that reloads the game and moves to default settings.
 function reloadGame() {
     setTimeout(() => {
         removeCards(cardsOpen)
@@ -251,6 +249,7 @@ function reloadGame() {
     refreshStars();
 }
 
+//Function to reduce the number of stars according to moves.
 function starRating() {
     let counter = document.querySelector(".moves").textContent;
     const stars = document.querySelectorAll(".star");
@@ -264,7 +263,7 @@ function starRating() {
     }
 }
 
-
+// Function to reset the number of stars to 3.
 function  refreshStars() {
     const numStars = document.querySelectorAll(".star");
 	for(let star of numStars) {
