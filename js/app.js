@@ -23,9 +23,7 @@ function displayCards() {
     }
     
     shuffle(allCards);
-    const docFrag = document.createDocumentFragment();
-    // newList.classList.add("card");
-    // const newList = document.createElement("li"); 
+    const docFrag = document.createDocumentFragment(); 
     for(let card of allCards) {
         const newList = document.createElement("li");
         newList.classList.add("card", "open")
@@ -88,35 +86,13 @@ deck.addEventListener("click", function handleCardClick(evt){
     }
 });
 
-/* deck.addEventListener('click', handler);
-deck.removeEventListener('click', handler);
-
-function handler(evt) {
-    console.log('first');
-    evt.target.classList.add("first");
-}
- */
-
 //function to display symbol
 function displaySymbol(evt) {
-    console.log("clicked");
     const clickedCard = evt.target;
     clickedCard.parentNode.classList.add("open");
     clickedCard.parentNode.classList.remove("flip");
-    console.log(clickedCard)
 }
 
-
-/* function addOpenCards(evt) {
-    const openCards = [];
-    const clickedCard= evt.target       
-    const allCardArray = clickedCard.firstElementChild.className.split(" ");
-    const cardArray = allCardArray[1].split("-");
-    const specificCard = cardArray[1];
-    openCards.push(specificCard);
-    // console.log(openCards);
-}
- */
 
 
 function matchOpenCards(){
@@ -129,7 +105,7 @@ function matchOpenCards(){
         }
         incrementCounter(openCards)
         openCards = [];
-        // console.log(openCards)
+
     }   
 }
 
@@ -141,6 +117,7 @@ function matchingCards(open) {
     });
 }
 
+//Functon to add a class to classses when they don't match and flip them back
 function nonMatchingCards( open ){
     
     open.forEach( card => {
@@ -155,27 +132,23 @@ function nonMatchingCards( open ){
 	
 }
 
+//Increments the counter evwerytime somwone makes two moves
 function incrementCounter(openCards) {
     // let openCards = document.querySelectorAll(".open");
     if (openCards.length === 2) {
         let counter = document.querySelector(".moves").textContent;
-        console.log(counter);
         counter = parseInt(counter) + 1;
-        // console.log(`this is the new ${counter}`)
         document.querySelector(".moves").textContent = counter;
-    
-        // incrementCounter(openCards)
     
     }
 }
 
-
+//Checks if all the cards are matched, adds the matched class to them then displays end message
 function checkAllMatch() {
-    const matchedCard = document.querySelectorAll(".open");
+    const matchedCard = document.querySelectorAll(".match");
     const numStars = document.querySelectorAll(".fa-star").length;
-    //const container = document.querySelector(".container")
     const counter = document.querySelector(".moves").textContent;
-    if (matchedCard.length === 1) {
+    if (matchedCard.length === 16) {
         const deck = document.querySelector("#deck");
         deck.remove();
         const docFrag = document.createDocumentFragment();
@@ -189,6 +162,7 @@ function checkAllMatch() {
     }
 }
 
+//Function to handle what happens when the play again
 playAgain = document.getElementById("end-btn");
 
 document.addEventListener("click", function(evt) {
@@ -220,18 +194,17 @@ document.addEventListener("click", function(evt) {
                 const deck = document.querySelector("#deck");
                 console.log("clicked");
                 displaySymbol(evt);
-                //addOpenCards(evt);
                 matchOpenCards();
                 starRating();
                 checkAllMatch();
             }
         });
-        //createDesk.addEventListener("click", timerControl);
     }
 });
 
-const restart = document.querySelector(".restart");
 
+const restart = document.querySelector(".restart");
+//This function runs when the restart button is clicked.
 restart.addEventListener("click", function resetGame() {
     displayCards();
     reloadGame();
@@ -254,12 +227,9 @@ function starRating() {
     let counter = document.querySelector(".moves").textContent;
     const stars = document.querySelectorAll(".star");
     counter = parseInt(counter);
-    if(counter === 2) {
+    if(counter === 2 || counter === 15) {
         stars[2].classList.remove("fa-star");
         stars[2].classList.add("fa-star-o");
-    } else if(counter === 15 ) {
-        stars[1].classList.remove("fa-star");
-        stars[1].classList.add("fa-star-o");
     }
 }
 

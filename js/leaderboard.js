@@ -1,6 +1,4 @@
-
-//const gameDetails = [];
-//localStorage.setItem("gameDetails", JSON.stringify(gameDetails))
+//Updates the array of players and their moves
 function save() {
     console.log("save");
     let playerName = document.getElementById("name").value;
@@ -9,23 +7,20 @@ function save() {
         name: playerName, 
         moves: counter
     }
-    // let gameDetails = JSON.parse(localStorage.getItem("gameDetails"))
     let gameDetails
     let dummyDetails = JSON.parse(localStorage.getItem("game_details"))
     if(dummyDetails === null){
         gameDetails = []
-        //do something
+
     }else{
         gameDetails = dummyDetails
     }
     gameDetails.push(playerDetails)
     localStorage.setItem("game_details", JSON.stringify(gameDetails))
-
+    gameDetails.sort(compareValues('moves'))
 
     console.log(gameDetails)
-    
-    // gameDetails.push(playerDetails)
-    // localStorage.setItem("Player's Name", playerName);
+
 }
 
 const leaderboard = document.querySelector("#leaderboard");
