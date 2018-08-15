@@ -1,9 +1,9 @@
+let timing = document.getElementById("timing");
+let seconds = 0, minutes = 0, hours = 0;
 let t;
 
 /**This function starts the timer and increments it */
 function startWatch() {
-    let timing = document.getElementById("timing");
-    let seconds = 0, minutes = 0, hours = 0;
     seconds++;
     if (seconds >= 60) {
         seconds = 0;

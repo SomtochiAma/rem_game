@@ -2,8 +2,9 @@
  * Create a list that holds all of your cards
  */
 
-const allCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", "diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", ];
+const allCards = ["diamond", "paper-plane-o", "anchor", "bolt", "cube", "leaf", "bomb", "bicycle", ];
 
+const doubleAllCards = allCards.concat(allCards);
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -22,9 +23,9 @@ function displayCards() {
         deck.removeChild(deck.childNodes[0]);
     }
     
-    shuffle(allCards);
+    shuffle(doubleAllCards);
     const docFrag = document.createDocumentFragment(); 
-    for(let card of allCards) {
+    for(let card of doubleAllCards) {
         const newList = document.createElement("li");
         newList.classList.add("card", "open")
         newList.innerHTML = '<div class="front"><i class="fa fa-' + card + '"></i></div><div class="back"></div>'
@@ -35,7 +36,7 @@ function displayCards() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
     
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -148,13 +149,15 @@ function checkAllMatch() {
     const matchedCard = document.querySelectorAll(".match");
     const numStars = document.querySelectorAll(".fa-star").length;
     const counter = document.querySelector(".moves").textContent;
+    const timing = document.querySelector("#timing");
+    const time = timing.textContent;
     if (matchedCard.length === 16) {
         const deck = document.querySelector("#deck");
         deck.remove();
         const docFrag = document.createDocumentFragment();
         const newDiv = document.createElement("div");
         newDiv.classList.add("end-msg");
-        newDiv.innerHTML = '<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ' + counter + ' moves and ' + numStars + ' stars</p><div>Name: <input type="text" id="name"><input type="button" value="Save" onclick="save()"></div><button id="end-btn">Play Again</button>';
+        newDiv.innerHTML = `<i class="fa fa-check"></i><br><h>Congratulations! You won!</h><p>You won with ${counter} moves and ${numStars}  stars. Time: ${time} </p><div>Name: <input type="text" id="name"><input type="button" value="Save" onclick="save()"></div><button id="end-btn">Play Again</button>`;
         docFrag.appendChild(newDiv);
         const firstElement = document.body.childNodes[2];
         document.body.insertBefore(docFrag, firstElement);
@@ -178,8 +181,8 @@ document.addEventListener("click", function(evt) {
         const createDesk = document.createElement("ul");
         const container = document.querySelector(".container");
         createDesk.setAttribute("id", "deck");
-        shuffle(allCards); 
-        for(let card of allCards) {
+        shuffle(doubleAllCards); 
+        for(let card of doubleAllCards) {
             const newList = document.createElement("li");
             newList.classList.add("card", "open")
             newList.innerHTML = '<div class="front"><i class="fa fa-' + card + '"></i></div><div class="back"></div>'
@@ -192,6 +195,7 @@ document.addEventListener("click", function(evt) {
         createDesk.addEventListener("click", function handleCardClick(evt){
             if(evt.target.nodeName === 'DIV') {
                 const deck = document.querySelector("#deck");
+                deck.addEventListener("click", timerControl);
                 console.log("clicked");
                 displaySymbol(evt);
                 matchOpenCards();
@@ -227,9 +231,12 @@ function starRating() {
     let counter = document.querySelector(".moves").textContent;
     const stars = document.querySelectorAll(".star");
     counter = parseInt(counter);
-    if(counter === 2 || counter === 15) {
+    if(counter === 2) {
         stars[2].classList.remove("fa-star");
         stars[2].classList.add("fa-star-o");
+    } else if(counter === 4) {
+        stars[1].classList.remove("fa-star");
+        stars[1].classList.add("fa-star-o");
     }
 }
 
